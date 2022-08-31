@@ -154,9 +154,9 @@ From this mode you can enter configuration submodes -- these are protocol or fea
   - Turn on 'Always show port labels in logical workspace' to have cables labelled with the port they're connected to (visible in gif).
   - Turn on 'Align logical workspace objects' to have devices snap to grid when moving around (kinda buggy but better than nothing, imo).
 
-![auto-cabling gif]("img/cabling.gif")
+*: This is on Mac -- it's on windows too, but I'm not sure about how to get there off the top of my head.
 
-*: This is on Mac -- it's on Windows too, but I'm not sure about how to get there off the top of my head.
+![auto-cabling gif](img/cabling.gif)
 
 ### Common Issues and Questions
 
