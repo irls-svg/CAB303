@@ -1,9 +1,3 @@
----
-puppeteer:
-  format: A4
-  displayHeaderFooter: false
----
-
 # **Cisco Router & Switch CLI Commands**
 
 - [**Cisco Router & Switch CLI Commands**](#cisco-router--switch-cli-commands)
@@ -17,6 +11,9 @@ puppeteer:
   - [**Notes, Tips, Terminology, and Common Problems/Solutions**](#notes-tips-terminology-and-common-problemssolutions)
     - [Notes](#notes)
       - [Configuration modes](#configuration-modes)
+        - [User EXEC mode](#user-exec-mode)
+        - [Privileged EXEC mode](#privileged-exec-mode)
+        - [Global configuration mode](#global-configuration-mode)
     - [Tips](#tips)
     - [Common Issues and Questions](#common-issues-and-questions)
       - [What is the difference between `down` and `administratively down`?](#what-is-the-difference-between-down-and-administratively-down)
@@ -26,7 +23,12 @@ puppeteer:
   - [**Examples**](#examples)
     - [Basic CLI configuration](#basic-cli-configuration)
       - [Getting to the CLI [Packet Tracer]](#getting-to-the-cli-packet-tracer)
+        - [For network devices (like routers, switches, firewalls, etc.)](#for-network-devices-like-routers-switches-firewalls-etc)
+        - [For host/end devices (like PCs, servers, etc.)](#for-hostend-devices-like-pcs-servers-etc)
       - [Configure router](#configure-router)
+        - [General config](#general-config)
+        - [Interface config](#interface-config)
+        - [Save config](#save-config)
       - [Configure switch](#configure-switch)
 
 ## **Summary**
@@ -120,15 +122,15 @@ Summarised from the [Cisco documentation](https://www.cisco.com/c/en/us/td/docs/
 
 The Cisco command-line interface is divided into different command modes. Each command mode has its own set of commands available for the configuration, maintenance, and monitoring of router and network operations. Commands available to you depend on the mode you are in.
 
-**User EXEC mode:**
+##### User EXEC mode
 
 When you start a session, you generally begin in user EXEC mode -- one of the two EXEC mode access levels. Only a limited subset of EXEC commands are available in user EXEC mode, for security reasons. This level of access is reserved for tasks that do not change the configuration of the router, such as determining the router status.
 
-**Privileged EXEC mode:**
+##### Privileged EXEC mode
 
 To have access to all commands, you must enter privileged EXEC mode -- the second EXEC mode access level. In privileged EXEC mode you can enter any EXEC command, as privileged EXEC mode is a superset of the user EXEC mode commands. Most EXEC mode commands are one-time commands, such as `show` or `more`. Normally, you'd need a password to enter this mode.
 
-**Global configuration mode:**
+##### Global configuration mode
 
 From privileged EXEC mode, you can enter global configuration mode to enter commands that configure general system characteristics, as well as enter specific configuration modes. Configuration modes, including global, allow you to make changes to the running configuration. If you save the configuration, the changes are stored across router reboots.
 
@@ -187,11 +189,11 @@ This will be a very basic example, and is definitely not intended to be a comple
 
 #### Getting to the CLI [Packet Tracer]
 
-**For network devices (like routers, switches, firewalls, etc.):**
+##### For network devices (like routers, switches, firewalls, etc.)
 
 - Click on the device you want to configure, then hit the 'CLI' tab up the top of the device window.
 
-**For host/end devices (like PCs, servers, etc.):**
+##### For host/end devices (like PCs, servers, etc.)
 
 This will get you into what is essentially a Windows command prompt -- can use `ping`, `tracert`, `ipconfig /all`, etc. to troubleshoot.
 
@@ -199,7 +201,7 @@ This will get you into what is essentially a Windows command prompt -- can use `
 
 #### Configure router
 
-**General config:**
+##### General config
 
 > On boot, you'll probably be prompted with `Would you like to enter the initial configuration dialog? [yes/no]:` -- **enter `n` and press return/enter** to skip!
 
@@ -216,7 +218,7 @@ This will get you into what is essentially a Windows command prompt -- can use `
      - I haven't looked at all the CAB303/222 pracs in detail, but I don't think this is something you'll need to do in the labs (and up to Week 6, definitely not) -- you should be safe to disable it, no worries.
 6. Exit global configuration mode [`exit`]
 
-**Interface config:**
+##### Interface config
 
 (continues from 5. above)
 
@@ -235,7 +237,7 @@ This will get you into what is essentially a Windows command prompt -- can use `
      3. `no shutdown`
 5. Exit interface configuration mode once done [`exit` or `end`]
 
-**Save config:**
+##### Save config
 
 > **Note:** This is **very** important! If you don't save the running config, it'll be lost when you restart the device and you'll have to do it all again :(
 
