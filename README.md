@@ -1,14 +1,14 @@
 # **Cisco Router & Switch CLI Commands**
 
 - [**Cisco Router & Switch CLI Commands**](#cisco-router--switch-cli-commands)
-  - [**Summary**](#summary)
+  - [**Overview and FYI**](#overview-and-fyi)
   - [**Commands**](#commands)
     - [Basic Commands](#basic-commands)
     - [Show Commands](#show-commands)
     - [Interface Commands](#interface-commands)
     - [IP Commands](#ip-commands)
     - [VLAN Commands [Switch-only]](#vlan-commands-switch-only)
-  - [**Notes, Tips, Terminology, and Common Problems/Solutions**](#notes-tips-terminology-and-common-problemssolutions)
+  - [**Notes, Tips, and Common Problems/Solutions**](#notes-tips-and-common-problemssolutions)
     - [Notes](#notes)
       - [Configuration modes](#configuration-modes)
         - [User EXEC mode](#user-exec-mode)
@@ -19,7 +19,7 @@
       - [What is the difference between `down` and `administratively down`?](#what-is-the-difference-between-down-and-administratively-down)
       - [I keep getting `invalid command`/`command not recognised`/`invalid input detected at '^'`, but I know the command is correct?](#i-keep-getting-invalid-commandcommand-not-recognisedinvalid-input-detected-at--but-i-know-the-command-is-correct)
       - [Not enough ports/correct port type isn't available [Packet Tracer]](#not-enough-portscorrect-port-type-isnt-available-packet-tracer)
-    - [Terminology](#terminology)
+      - [What's the difference between crossover and straight-through cables?](#whats-the-difference-between-crossover-and-straight-through-cables)
   - [**Examples**](#examples)
     - [Basic CLI configuration](#basic-cli-configuration)
       - [Getting to the CLI [Packet Tracer]](#getting-to-the-cli-packet-tracer)
@@ -31,11 +31,13 @@
         - [Save config](#save-config)
       - [Configure switch](#configure-switch)
 
-## **Summary**
+## **Overview and FYI**
 
-Something I chucked together to explain the basics of using the Cisco CLI (in packet tracer) for CAB303/CAB222, plus some extra stuff I think might be useful -- answers to common questions, common issues, that kinda thing.
+Something I chucked together to explain the basics of using the Cisco CLI (in packet tracer) for CAB303/CAB222, plus some extra bits and pieces I think might be useful -- answers to common questions, common issues, that kinda thing.
 
-Will update as run into things (slash when I get a chance). Hopefully I'll be able to add some more examples that are relevant to the weekly pracs, too. Feel free to LMK if there's anything you'd like added, or any issues.
+Will update as I run into things (or when I get a chance). Hopefully I'll be able to add some more examples that are relevant to the weekly pracs, too, and maybe some OSPF/RIP stuff? I'm not actually doing this unit, so I'm not 100% on what's being covered, or what's in the pracs each week.
+
+Please LMK if there's any issues (not a CCNA holder nor a networking professional so there's a chance some things might be wrong), or if you have any questions/think there's anything I should add, too.
 
 ## **Commands**
 
@@ -112,7 +114,7 @@ These are commands used to configure interfaces (ports) on the device, such as s
 |---|---|---|---|
 | `vlan <vlan number>` | `vlan` | Enter VLAN configuration mode | Used to enter configuration for a VLAN, such as `vlan 1` |
 
-## **Notes, Tips, Terminology, and Common Problems/Solutions**
+## **Notes, Tips, and Common Problems/Solutions**
 
 ### Notes
 
@@ -147,6 +149,14 @@ From this mode you can enter configuration submodes -- these are protocol or fea
   - Depending on the device, they can be funky about this (especially the spacing). For example, on a Cisco 2960, `int range fa0/1-4` will work, but `int range fa0/1 - 4` won't. On a Cisco 3750, `int range fa0/1 - 4` will work, but `int range fa0/1-4` won't. (based copilot writing that again)
 - [Packet Tracer] Hovering over a device for a bit will show a quick summary of the device, including the hostname, IP address, MAC address, and interface information (similar to `show ip int brief`).
 - [Packet Tracer] My personal opinion/recommendation is don't touch the speed/play controls unless it's to fast-forward. If you pause and forget to press play again, pressing play on the simulation probably won't be the first thing you think of if something isn't working, you'll start troubleshooting the device/config first rather than packet tracer itself.
+- [Packet Tracer] If you hold down `Ctrl`/`Cmd` while selecting a cable and continue to hold it, it turns on auto-cable. You can just keep clicking to attach to new devices, without having to reselect the cable each time (see gif).
+- [Packet Tracer] Under Preferences* > Interface > Customer User Experience you can:
+  - Turn on 'Always show port labels in logical workspace' to have cables labelled with the port they're connected to (visible in gif).
+  - Turn on 'Align logical workspace objects' to have devices snap to grid when moving around (kinda buggy but better than nothing, imo).
+
+![auto-cabling gif]("img/cabling.gif")
+
+*: This is on Mac -- it's on Windows too, but I'm not sure about how to get there off the top of my head.
 
 ### Common Issues and Questions
 
@@ -164,19 +174,10 @@ You're probably trying to run a command in the wrong mode, e.g. trying to run `s
 
 This is funky as hell, but go to the 'Physical' config tab on the device window, click on the power button to turn the device off (may need to zoom in), then you can click and drag different modules from the panel on the left-hand side into empty slots on the device. Make sure to turn the device back on once you're done.
 
-### Terminology
+#### What's the difference between crossover and straight-through cables?
 
-[Major WIP]
-
-| TERM | MEANING | MORE INFO/RESOLUTION |
-|--|--|--|
-| user EXEC mode | Basic user mode, can only run a few commands -- use `en` to get into the good stuff. | Prompt will look like `Hostname>`. From Cisco docs: "When you start a session on a router, you generally begin in user EXEC mode , which is one of two access levels of the EXEC mode. For security purposes, only a limited subset of EXEC commands are available in user EXEC mode. This level of access is reserved for tasks that do not change the configuration of the router, such as determining the router status." |
-| privileged EXEC mode | The good stuff, can run more commands like `show`, `ping`, `conf t`, etc. | Prompt will look like `Hostname#` |
-| global configuration mode | Used to configure the device itself, such as hostname, DNS, etc. | Prompt will look like `Hostname(config)#` |
-| interface configuration mode | Used to configure interfaces, such as IP addresses, descriptions, etc. | Prompt will look like `Hostname(config-if)#` |
-| down | Interface is administratively up (i.e. online) but physically down. Could be issue with physical cable/port, IP settings, misconfiguration | Check physical ports and cables for any issues, double check IP configurations using `show` commands, try `traceroute`/`ping` to identify where the problem is occuring[^1] |
-| administratively down | Interface is administratively shutdown, i.e. offline -- purposely shutdown/default state | Enter interface config mode and use `no shutdown` to bring interface online |
-| invalid command/command not recognised | You're probably trying to run a command in the wrong mode, e.g. trying to run `show` in privileged mode | Try again, but chuck a `do` in front of whatever command you're trying to run this time |
+Crossover cables are used to connect two devices of the same type (end device-to-end device, or network device-to-network device) to each other  such as two switches, or a printer and PC. Straight-through cables are used to connect two devices of different types, such as a switch to a PC, or a server to router. 
+In practice this doesn't really matter that much -- most devices will deal with it themselves, unless you're using something old that doesn't support MDI -- but it's on the CCNA, and Packet Tracer is for CCNA, so.
 
 ## **Examples**
 
